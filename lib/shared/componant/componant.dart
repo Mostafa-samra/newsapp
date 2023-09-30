@@ -1,7 +1,7 @@
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 
-Widget itembuilder(article) {
+Widget itembuilder(article, context) {
   return Padding(
     padding: const EdgeInsets.all(10.0),
     child: Row(
@@ -10,7 +10,7 @@ Widget itembuilder(article) {
           height: 120.0,
           width: 120.0,
           decoration: BoxDecoration(
-            color: Colors.amber,
+            color: Theme.of(context).primaryColor,
             borderRadius: BorderRadius.circular(12.0),
             image: DecorationImage(
               image: NetworkImage('${article['urlToImage']}'),
@@ -32,21 +32,27 @@ Widget itembuilder(article) {
             width: 120.0,
             height: 120.0,
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12.0), color: Colors.amber),
+              borderRadius: BorderRadius.circular(12.0),
+              color: Theme.of(context).primaryColor,
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.start,
               mainAxisSize: MainAxisSize.max,
               children: [
                 Text(
-                  // "title",
-                  '${article["title"]}',
-                  style: const TextStyle(fontWeight: FontWeight.w600),
-                ),
+                    // "title",
+                    '${article["title"]}',
+                    style: Theme.of(context).textTheme.bodyLarge
+                    //  const TextStyle(fontWeight: FontWeight.w600),
+                    ),
                 const SizedBox(
                   height: 10.0,
                 ),
-                Text('${article['publishedAt']}'),
+                Text(
+                  '${article['publishedAt']}',
+                  style: Theme.of(context).textTheme.bodySmall,
+                ),
               ],
             ),
           ),
@@ -56,14 +62,14 @@ Widget itembuilder(article) {
   );
 }
 
-Widget articalBuilder(list) {
+Widget articalBuilder(list, context) {
   return ConditionalBuilder(
     condition: list.length > 0,
     builder: (context) {
       return ListView.builder(
           physics: const BouncingScrollPhysics(),
           itemBuilder: (context, index) {
-            return itembuilder(list[index]);
+            return itembuilder(list[index], context);
           },
           /*  separatorBuilder: (context, index) {
             return const Divider();

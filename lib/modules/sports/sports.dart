@@ -12,7 +12,7 @@ class Sports extends StatelessWidget {
       listener: (context, state) {},
       builder: (context, state) {
         var cubit = NewsAppCubit.get(context).sports;
-        return articalBuilder(cubit);
+        return articalBuilder(cubit, context);
       },
     );
   }

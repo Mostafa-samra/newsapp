@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:newsapp/modules/business/business.dart';
 import 'package:newsapp/modules/science/science.dart';
 import 'package:newsapp/modules/sports/sports.dart';
+import 'package:newsapp/shared/network/locale/cache_helper.dart';
 import 'package:newsapp/shared/network/remote/diohelper.dart';
 
 part 'news_app_state.dart';
@@ -111,5 +112,18 @@ class NewsAppCubit extends Cubit<NewsAppState> {
       emit(NewsAppScienceErrorState(error: 'Science $onError'));
       debugPrint(onError.toString());
     });
+  }
+
+  bool isDark = false;
+  // ThemeMode appMode = ThemeMode.dark;
+  void changeAppTheme({bool? fromShared}) {
+    if (fromShared != null) {
+      isDark = fromShared;
+      emit(NewsAppChangeThemeState());
+    } else {
+      isDark = !isDark;
+      CacheHelper.putData(key: 'isDark', value: isDark)
+          .then((value) => emit(NewsAppChangeThemeState()));
+    }
   }
 }

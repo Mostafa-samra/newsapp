@@ -7,17 +7,12 @@ class LayoutScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => NewsAppCubit()
-        ..getBusinessData()
-        ..getSportsData()
-        ..getScienceData(),
-      child: BlocConsumer<NewsAppCubit, NewsAppState>(
-        listener: (context, state) {},
-        builder: (context, state) {
-          var cubit = NewsAppCubit.get(context);
-          return Scaffold(
-            /* floatingActionButton: FloatingActionButton(
+    return BlocConsumer<NewsAppCubit, NewsAppState>(
+      listener: (context, state) {},
+      builder: (context, state) {
+        var cubit = NewsAppCubit.get(context);
+        return Scaffold(
+          /* floatingActionButton: FloatingActionButton(
                 onPressed: () {
                   DioHelper.getData(
                     pathUrl: 'v2/top-headlines',
@@ -31,28 +26,48 @@ class LayoutScreen extends StatelessWidget {
                   });
                 },
                 child: const Icon(Icons.add)), */
-            appBar: AppBar(
-              title: Row(
-                children: [
-                  const Text("News Of "),
-                  Text(
-                    cubit.titleApp[cubit.currentIndex],
-                    style: const TextStyle(backgroundColor: Colors.amber),
-                  )
-                ],
+          appBar: AppBar(
+            actions: [
+              IconButton(
+                onPressed: () {},
+                icon: const Icon(Icons.search),
               ),
-            ),
-            body: cubit.screens[cubit.currentIndex],
-            bottomNavigationBar: BottomNavigationBar(
-                items: cubit.screenItem,
-                currentIndex: cubit.currentIndex,
-                onTap: (value) {
-                  cubit.bottomNavBar(value);
+              IconButton(
+                onPressed: () {
+                  cubit.changeAppTheme();
                 },
-                type: BottomNavigationBarType.fixed),
-          );
-        },
-      ),
+                icon: const Icon(Icons.brightness_4_outlined),
+              )
+            ],
+            title: Row(
+              children: [
+                Text(
+                  "News Of ",
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+                Container(
+                  padding: const EdgeInsets.all(5.0),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12.0),
+                      color: Theme.of(context).primaryColor),
+                  child: Text(
+                    cubit.titleApp[cubit.currentIndex],
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                )
+              ],
+            ),
+          ),
+          body: cubit.screens[cubit.currentIndex],
+          bottomNavigationBar: BottomNavigationBar(
+              items: cubit.screenItem,
+              currentIndex: cubit.currentIndex,
+              onTap: (value) {
+                cubit.bottomNavBar(value);
+              },
+              type: BottomNavigationBarType.fixed),
+        );
+      },
     );
   }
 }

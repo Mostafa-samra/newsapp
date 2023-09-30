@@ -12,7 +12,7 @@ class Science extends StatelessWidget {
       listener: (context, state) {},
       builder: (context, state) {
         var cubit = NewsAppCubit.get(context).science;
-        return articalBuilder(cubit);
+        return articalBuilder(cubit, context);
       },
     );
   }

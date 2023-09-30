@@ -35,3 +35,5 @@ final class NewsAppScienceErrorState extends NewsAppState {
 
   NewsAppScienceErrorState({required this.error});
 }
+
+final class NewsAppChangeThemeState extends NewsAppState {}
