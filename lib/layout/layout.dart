@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:newsapp/layout/cubit/news_app_cubit.dart';
+import 'package:newsapp/modules/search/search.dart';
+import 'package:newsapp/shared/componant/componant.dart';
 
 class LayoutScreen extends StatelessWidget {
   const LayoutScreen({super.key});
@@ -29,7 +31,12 @@ class LayoutScreen extends StatelessWidget {
           appBar: AppBar(
             actions: [
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  navigateTo(
+                    context,
+                    (p0) => const SearchScreen(),
+                  );
+                },
                 icon: const Icon(Icons.search),
               ),
               IconButton(
@@ -37,7 +44,7 @@ class LayoutScreen extends StatelessWidget {
                   cubit.changeAppTheme();
                 },
                 icon: const Icon(Icons.brightness_4_outlined),
-              )
+              ),
             ],
             title: Row(
               children: [

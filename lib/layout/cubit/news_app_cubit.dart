@@ -53,9 +53,10 @@ class NewsAppCubit extends Cubit<NewsAppState> {
   void getBusinessData() {
     emit(NewsAppBusinessLodedState());
     DioHelper.getData(
-      pathUrl: 'v2/everything',
+      pathUrl: 'v2/top-headlines',
       queryParameters: {
-        'q': 'business',
+        'country': 'eg',
+        'category': 'business',
         'apiKey': '65f7f556ec76449fa7dc7c0069f040ca',
       },
     ).then(
@@ -75,9 +76,10 @@ class NewsAppCubit extends Cubit<NewsAppState> {
   void getSportsData() {
     emit(NewsAppSportsLodedState());
     DioHelper.getData(
-      pathUrl: 'v2/everything',
+      pathUrl: 'v2/top-headlines',
       queryParameters: {
-        'q': 'sports',
+        'country': 'eg',
+        'category': 'sports',
         'apiKey': '65f7f556ec76449fa7dc7c0069f040ca',
       },
     ).then(
@@ -97,9 +99,10 @@ class NewsAppCubit extends Cubit<NewsAppState> {
   void getScienceData() {
     emit(NewsAppScienceLodedState());
     DioHelper.getData(
-      pathUrl: 'v2/everything',
+      pathUrl: 'v2/top-headlines',
       queryParameters: {
-        'q': 'science',
+        'country': 'eg',
+        'category': 'science',
         'apiKey': '65f7f556ec76449fa7dc7c0069f040ca',
       },
     ).then(
@@ -110,6 +113,29 @@ class NewsAppCubit extends Cubit<NewsAppState> {
       },
     ).catchError((onError) {
       emit(NewsAppScienceErrorState(error: 'Science $onError'));
+      debugPrint(onError.toString());
+    });
+  }
+
+  List<dynamic> search = [];
+
+  void getSearch(String value) {
+    emit(NewsAppSearchLodedState());
+    search = [];
+    DioHelper.getData(
+      pathUrl: 'v2/everything',
+      queryParameters: {
+        'q': value,
+        'apiKey': '65f7f556ec76449fa7dc7c0069f040ca',
+      },
+    ).then(
+      (value) {
+        search = value.data["articles"];
+        emit(NewsAppSearchSucsesState());
+        debugPrint("SearchSucses ==> ${sports[0]['title']}");
+      },
+    ).catchError((onError) {
+      emit(NewsAppSearchErrorState(error: 'search $onError'));
       debugPrint(onError.toString());
     });
   }

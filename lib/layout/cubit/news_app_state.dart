@@ -37,3 +37,13 @@ final class NewsAppScienceErrorState extends NewsAppState {
 }
 
 final class NewsAppChangeThemeState extends NewsAppState {}
+
+final class NewsAppSearchLodedState extends NewsAppState {}
+
+final class NewsAppSearchSucsesState extends NewsAppState {}
+
+final class NewsAppSearchErrorState extends NewsAppState {
+  final String error;
+
+  NewsAppSearchErrorState({required this.error});
+}

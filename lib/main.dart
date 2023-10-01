@@ -25,12 +25,20 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => NewsAppCubit()
-        ..changeAppTheme(fromShared: isDark)
-        ..getBusinessData()
-        ..getSportsData()
-        ..getScienceData(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => NewsAppCubit()
+            ..changeAppTheme(fromShared: isDark)
+            ..getBusinessData()
+            ..getSportsData()
+            ..getScienceData(),
+        ),
+        BlocProvider(
+          create: (context) =>
+              NewsAppCubit()..changeAppTheme(fromShared: isDark),
+        ),
+      ],
       child: BlocConsumer<NewsAppCubit, NewsAppState>(
         listener: (context, state) {},
         builder: (context, state) {
@@ -68,7 +76,7 @@ class MyApp extends StatelessWidget {
               useMaterial3: true,
               textTheme: const TextTheme(
                 bodyLarge: TextStyle(
-                  fontSize: 18.0,
+                  fontSize: 15.0,
                   fontWeight: FontWeight.w600,
                   color: Colors.black,
                 ),
