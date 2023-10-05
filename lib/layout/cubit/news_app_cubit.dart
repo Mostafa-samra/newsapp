@@ -5,6 +5,7 @@ import 'package:newsapp/modules/science/science.dart';
 import 'package:newsapp/modules/sports/sports.dart';
 import 'package:newsapp/shared/network/locale/cache_helper.dart';
 import 'package:newsapp/shared/network/remote/diohelper.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 part 'news_app_state.dart';
 
@@ -151,5 +152,13 @@ class NewsAppCubit extends Cubit<NewsAppState> {
       CacheHelper.putData(key: 'isDark', value: isDark)
           .then((value) => emit(NewsAppChangeThemeState()));
     }
+  }
+
+  late final WebViewController controller;
+  webView(String url) {
+    controller = WebViewController()
+      ..loadRequest(
+        Uri.parse(url),
+      ).then((value) => NewsAppWebViewState());
   }
 }

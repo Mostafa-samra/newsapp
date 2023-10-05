@@ -47,3 +47,5 @@ final class NewsAppSearchErrorState extends NewsAppState {
 
   NewsAppSearchErrorState({required this.error});
 }
+
+final class NewsAppWebViewState extends NewsAppState {}
